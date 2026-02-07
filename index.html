@@ -208,7 +208,10 @@ footer{text-align:center;padding:30px;color:#9ca3af}
 
     <div class="streak-box">
       🔥 Current Streak: <span id="currentStreak">0</span><br>
-      🏆 Best Streak: <span id="bestStreak">0</span>
+      🏆 Best Streak: <span id="bestStreak">0</span><br>
+      <button id="resetStreakBtn" style="margin-top:10px;padding:8px 16px;border:none;border-radius:20px;background:#f59e0b;color:#000;cursor:pointer;font-weight:600;">
+        Reset Streak
+      </button>
     </div>
 
     <div class="badge-tray">
@@ -221,7 +224,9 @@ footer{text-align:center;padding:30px;color:#9ca3af}
         <div class="badge-slot" data-badge="7">🏅</div>
         <div class="badge-slot" data-badge="14">👑</div>
       </div>
-      <button id="clearBadgesBtn" style="margin-top:15px;padding:8px 16px;border:none;border-radius:20px;background:#f59e0b;color:#000;cursor:pointer;font-weight:600;">
+
+      <!-- Separate buttons for badges and streaks -->
+      <button id="clearBadgesBtn" style="margin-top:10px;padding:8px 16px;border:none;border-radius:20px;background:#f59e0b;color:#000;cursor:pointer;font-weight:600;">
         Clear Badges
       </button>
     </div>
@@ -267,7 +272,7 @@ function startTimer(){
   interval=setInterval(()=>{
     time--; updateTimer();
 
-    if(time===1800) unlockBadge("30");
+    if(time === 1800) unlockBadge("30");
 
     if(time<=0){
       clearInterval(interval);
@@ -344,9 +349,20 @@ document.addEventListener("fullscreenchange",()=>{
 /* CLEAR BADGES */
 document.getElementById("clearBadgesBtn").addEventListener("click",()=>{
   localStorage.removeItem("badges");
-  earnedBadges.length=0;
+  earnedBadges.length = 0;
   restoreBadges();
   alert("All badges have been cleared!");
+});
+
+/* RESET STREAK */
+document.getElementById("resetStreakBtn").addEventListener("click",()=>{
+  currentStreak = 0;
+  bestStreak = 0;
+  localStorage.setItem("currentStreak", currentStreak);
+  localStorage.setItem("bestStreak", bestStreak);
+  document.getElementById("currentStreak").innerText = currentStreak;
+  document.getElementById("bestStreak").innerText = bestStreak;
+  alert("Streaks have been reset!");
 });
 </script>
 

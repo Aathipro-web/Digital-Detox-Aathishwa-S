@@ -39,7 +39,7 @@ button{
 }
 
 .bton{
-      padding:14px 30px;
+  padding:14px 30px;
   border:none;
   border-radius:30px;
   cursor:pointer;
@@ -221,9 +221,13 @@ footer{text-align:center;padding:30px;color:#9ca3af}
         <div class="badge-slot" data-badge="7">🏅</div>
         <div class="badge-slot" data-badge="14">👑</div>
       </div>
+      <button id="clearBadgesBtn" style="margin-top:15px;padding:8px 16px;border:none;border-radius:20px;background:#f59e0b;color:#000;cursor:pointer;font-weight:600;">
+        Clear Badges
+      </button>
     </div>
   </div>
 </section>
+
 <a href="https://aathipro-web.github.io/Aathi-portfolio/" target="_blank" rel="noopener noreferrer">
     <button id="bton" type="button">
         My Portfolio
@@ -244,8 +248,9 @@ const timerEl=timer, statusMsgEl=statusMsg;
 
 updateTimer();
 restoreBadges();
-currentStreak.innerText=currentStreak;
-bestStreak.innerText=bestStreak;
+document.getElementById("currentStreak").innerText=currentStreak;
+document.getElementById("bestStreak").innerText=bestStreak;
+document.getElementById("stopCount").innerText=stopCounter;
 
 function acceptChallenge(){
   acceptBtn.style.display="none";
@@ -322,16 +327,26 @@ function restoreBadges(){
   document.querySelectorAll(".badge-slot").forEach(b=>{
     if(earnedBadges.includes(b.dataset.badge))
       b.classList.add("unlocked");
+    else
+      b.classList.remove("unlocked");
   });
 }
 
 /* AUTO-PAUSE */
 document.addEventListener("visibilitychange",()=>{ 
-    if(document.hidden) pauseTimer("⏸️ Tab switched click resume", true); 
+  if(document.hidden) pauseTimer("⏸️ Tab switched click resume", true); 
 });
 window.addEventListener("blur",()=> pauseTimer("⏸️ App switched click resume", true));
 document.addEventListener("fullscreenchange",()=>{ 
-    if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume", true); 
+  if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume", true); 
+});
+
+/* CLEAR BADGES */
+document.getElementById("clearBadgesBtn").addEventListener("click",()=>{
+  localStorage.removeItem("badges");
+  earnedBadges.length=0;
+  restoreBadges();
+  alert("All badges have been cleared!");
 });
 </script>
 

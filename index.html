@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Digital Addiction Awareness</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{
+  background:radial-gradient(circle at top,#2a003f,#000);
+  color:#e5e5e5;
+}
+section{padding:80px 10%}
+h1,h2,h3{color:#c084fc}
+.gold{color:#facc15}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+.hero h1{font-size:3rem;margin-bottom:20px}
+.hero p{max-width:700px;margin-bottom:30px;color:#d1d5db}
+
+button{
+  padding:14px 30px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(135deg,#facc15,#f59e0b);
+  margin:8px;
+}
+
+.bton{
+      padding:14px 30px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(135deg,#facc15,#f59e0b);
+  margin:8px; 
+}
+
+a{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  text-decoration: none;
+}
+
+.stop-btn{
+  background:#000;
+  color:#facc15;
+  border:2px solid #facc15;
+}
+
+.card{
+  background:rgba(0,0,0,.8);
+  border-radius:20px;
+  padding:40px;
+  box-shadow:0 0 30px rgba(0,0,0,.8);
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  margin-top:30px;
+  text-align:center;
+}
+
+.image-section{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
+  align-items:center;
+}
+.image-section img{
+  width:100%;
+  border-radius:20px;
+}
+
+#timer{
+  font-size:3rem;
+  color:#facc15;
+  margin:30px auto 10px;
+  padding:20px 40px;
+  border:3px solid #facc15;
+  border-radius:20px;
+  display:inline-block;
+}
+
+.controls{display:none;margin-top:20px}
+#statusMsg{margin-top:10px;color:#60a5fa}
+
+.stop-box,.streak-box,.badge-tray{
+  margin-top:25px;
+  padding:15px;
+  border:1px solid #facc15;
+  border-radius:15px;
+  text-align:center;
+}
+
+#badgeTray{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+  gap:20px;
+  margin-top:15px;
+}
+
+.badge-slot{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:2px dashed rgba(250,204,21,.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.8rem;
+  color:rgba(250,204,21,.3);
+}
+
+.badge-slot.unlocked{
+  background:radial-gradient(circle at top,#fff3b0,#facc15,#b45309);
+  border:3px solid gold;
+  color:#000;
+  box-shadow:0 0 15px rgba(250,204,21,.8);
+}
+
+#flash{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+#flash h1{color:gold;font-size:2.5rem}
+
+footer{text-align:center;padding:30px;color:#9ca3af}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<section class="hero">
+  <h1>Break Free from <span class="gold">Digital Addiction</span></h1>
+  <p>An interactive awareness & self-discipline platform.</p>
+  <button onclick="document.getElementById('info').scrollIntoView()">Start Journey</button>
+</section>
+
+<!-- PAGE 2 -->
+<section id="info">
+  <div class="card">
+    <h2 style="text-align:center;">What is Digital Addiction?</h2>
+    <div class="info-grid">
+      <div><h3 class="gold">Warning Signs</h3><p>Anxiety, restlessness</p></div>
+      <div><h3 class="gold">Effects</h3><p>Stress, low productivity</p></div>
+      <div><h3 class="gold">Solution</h3><p>Mindful usage</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section>
+  <div class="image-section">
+    <div>
+      <h2>Effects</h2>
+      <ul>
+        <li>Low focus</li>
+        <li>Poor sleep</li>
+        <li>Mental fatigue</li>
+      </ul>
+    </div>
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
+  </div>
+</section>
+
+<!-- PAGE 4 -->
+<section id="challenge">
+  <div class="card" style="text-align:center;">
+    <h2>1-Hour Digital Detox</h2>
+
+    <button id="acceptBtn" onclick="acceptChallenge()">Accept Challenge</button>
+
+    <div id="timer">60:00</div>
+    <div id="statusMsg"></div>
+
+    <div class="controls" id="controls">
+      <button class="stop-btn" onclick="manualStop()">Stop</button>
+      <button onclick="resumeTimer()">Resume</button>
+    </div>
+
+    <div class="stop-box">
+      ⏸️ Manual Stops: <span id="stopCount">0</span>
+    </div>
+
+    <div class="streak-box">
+      🔥 Current Streak: <span id="currentStreak">0</span><br>
+      🏆 Best Streak: <span id="bestStreak">0</span>
+    </div>
+
+    <div class="badge-tray">
+      Badges
+      <div id="badgeTray">
+        <div class="badge-slot" data-badge="30">⏱️</div>
+        <div class="badge-slot" data-badge="complete">✅</div>
+        <div class="badge-slot" data-badge="nostop">💎</div>
+        <div class="badge-slot" data-badge="4">🔥</div>
+        <div class="badge-slot" data-badge="7">🏅</div>
+        <div class="badge-slot" data-badge="14">👑</div>
+      </div>
+    </div>
+  </div>
+</section>
+<a href="https://aathipro-web.github.io/Aathi-portfolio/" target="_blank" rel="noopener noreferrer">
+    <button id="bton" type="button">
+        My Portfolio
+    </button>
+</a>
+<footer>© Digital Wellness Initiative- Aathishwa S</footer>
+<div id="flash"><h1>FOCUS MODE ON</h1></div>
+
+<script>
+let time=3600,interval=null,running=false;
+let stopCounter=0;
+
+let currentStreak=+localStorage.getItem("currentStreak")||0;
+let bestStreak=+localStorage.getItem("bestStreak")||0;
+const earnedBadges=JSON.parse(localStorage.getItem("badges")||"[]");
+
+const timerEl=timer, statusMsgEl=statusMsg;
+
+updateTimer();
+restoreBadges();
+currentStreak.innerText=currentStreak;
+bestStreak.innerText=bestStreak;
+
+function acceptChallenge(){
+  acceptBtn.style.display="none";
+  controls.style.display="block";
+  flash.style.display="flex";
+  document.documentElement.requestFullscreen?.();
+  setTimeout(()=>flash.style.display="none",2500);
+  startTimer();
+}
+
+function startTimer(){
+  if(running) return;
+  running=true;
+  interval=setInterval(()=>{
+    time--; updateTimer();
+
+    if(time===1800) unlockBadge("30");
+
+    if(time<=0){
+      clearInterval(interval);
+      running=false;
+      unlockBadge("complete");
+      if(stopCounter===0) unlockBadge("nostop");
+      updateStreak();
+      statusMsgEl.innerText="✅ Challenge completed!";
+    }
+  },1000);
+}
+
+function pauseTimer(msg,countStop=false){
+  if(!running) return;
+  clearInterval(interval); running=false;
+  if(countStop){
+    stopCounter++;
+    stopCount.innerText=stopCounter;
+  }
+  statusMsgEl.innerText=msg;
+}
+
+function manualStop(){
+  pauseTimer("⏸️ Timer paused manually",true);
+}
+
+function resumeTimer(){
+  if(running) return;
+  if(!document.fullscreenElement)
+    document.documentElement.requestFullscreen?.();
+  statusMsgEl.innerText="▶ Timer resumed";
+  startTimer();
+}
+
+function updateTimer(){
+  timerEl.innerText=`${Math.floor(time/60)}:${String(time%60).padStart(2,"0")}`;
+}
+
+function updateStreak(){
+  currentStreak++;
+  bestStreak=Math.max(bestStreak,currentStreak);
+  localStorage.setItem("currentStreak",currentStreak);
+  localStorage.setItem("bestStreak",bestStreak);
+  document.getElementById("currentStreak").innerText=currentStreak;
+  document.getElementById("bestStreak").innerText=bestStreak;
+  if([4,7,14].includes(currentStreak)) unlockBadge(String(currentStreak));
+}
+
+function unlockBadge(id){
+  if(earnedBadges.includes(id)) return;
+  earnedBadges.push(id);
+  localStorage.setItem("badges",JSON.stringify(earnedBadges));
+  restoreBadges();
+}
+
+function restoreBadges(){
+  document.querySelectorAll(".badge-slot").forEach(b=>{
+    if(earnedBadges.includes(b.dataset.badge))
+      b.classList.add("unlocked");
+  });
+}
+
+/* AUTO-PAUSE */
+document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseTimer("⏸️ Tab switchedclick resume"); });
+window.addEventListener("blur",()=> pauseTimer("⏸️ App switched click resume"));
+document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume"); });
+</script>
+
+</body>
+</html>

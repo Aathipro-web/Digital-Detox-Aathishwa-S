@@ -198,7 +198,7 @@
       h1{font-size:2.2rem}
       section{padding:60px 6%}
     }
-    
+
     a{
   display:flex;
   flex-direction:column;
@@ -333,8 +333,8 @@
     running=true;
     interval=setInterval(()=>{
       time--;updateTimer();
-      if(time===3595) unlockBadge("30");
-      if(time<=3595){
+      if(time===1800) unlockBadge("30");
+      if(time<=0){
         clearInterval(interval);running=false;
         unlockBadge("complete");
         if(stopCounter===0) unlockBadge("nostop");
@@ -399,9 +399,9 @@
     location.reload();
   };
 
-  document.addEventListener("visibilitychange",()=>{if(document.hidden) pauseTimer("⏸️ Tab switched click resume");});
-  window.addEventListener("blur",()=>pauseTimer("⏸️ App switched click resume"));
-  document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume");});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden) pauseTimer("⏸️ Tab switched click resume", true);});
+  window.addEventListener("blur",()=>pauseTimer("⏸️ App switched click resume", true));
+  document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume", true);});
 </script>
 
 </body>

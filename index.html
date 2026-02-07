@@ -203,7 +203,7 @@ footer{text-align:center;padding:30px;color:#9ca3af}
     </div>
 
     <div class="stop-box">
-      ⏸️ Manual Stops: <span id="stopCount">0</span>
+      ⏸️ Stops: <span id="stopCount">0</span>
     </div>
 
     <div class="streak-box">
@@ -326,9 +326,13 @@ function restoreBadges(){
 }
 
 /* AUTO-PAUSE */
-document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseTimer("⏸️ Tab switchedclick resume"); });
-window.addEventListener("blur",()=> pauseTimer("⏸️ App switched click resume"));
-document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume"); });
+document.addEventListener("visibilitychange",()=>{ 
+    if(document.hidden) pauseTimer("⏸️ Tab switched click resume", true); 
+});
+window.addEventListener("blur",()=> pauseTimer("⏸️ App switched click resume", true));
+document.addEventListener("fullscreenchange",()=>{ 
+    if(!document.fullscreenElement) pauseTimer("⏸️ Fullscreen exited click resume", true); 
+});
 </script>
 
 </body>
